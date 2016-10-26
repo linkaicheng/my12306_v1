@@ -84,7 +84,7 @@ function selectAllNullorReserve(obj,type){
         </label></td>
         <td width="6%" align="center" class="text_cray1">性别</td>
         <td width="6%" align="left" class="text_cray1"><label>
-          <select name="select" class="text_cray">
+          <select name="sex" class="text_cray">
             <option value="1" ${sessionScope.listUser.sex=='1'?'selected':'' }>男</option>
           
             <option value="2" ${sessionScope.listUser.sex=='2'?'selected':'' }>女</option>
