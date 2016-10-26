@@ -810,4 +810,118 @@ public class UserDaoImpl implements UserDao {
 		}
 		return tag;
 	}
+
+	@Override
+	public int getUserListPageCount(int pageSize, User one) throws SQLException {
+		int res=0;
+		int rowCount=getUserListRowCount(one);
+		if(rowCount%pageSize==0){
+			res=rowCount/pageSize;
+		}else{
+			res=rowCount/pageSize+1;
+		}
+		
+		return res;
+	}
+
+	private int getUserListRowCount(User one) throws SQLException {
+		int rowCount=0;
+		//sql语句
+		StringBuffer find_sql=new StringBuffer();
+		find_sql.append("select count(*)");
+		find_sql.append(" from t_user u,t_city c,t_province p,t_usertype t,t_certtype e ");
+		find_sql.append("where u.city=c.city_id and c.father=p.province_id and u.user_type=t.id and u.cert_type=e.id");
+		
+		//查询条件id字段
+				Integer id = one.getId();
+				if(id!=null && id!=0){
+					find_sql.append(" AND u.id="+id);
+				}
+				//查询条件username字段
+				String username = one.getUsername();
+				if(username!=null && !username.isEmpty()){
+					find_sql.append(" AND u.username='"+username+"'");
+				}
+				//查询条件password字段
+				String password = one.getPassword();
+				if(password!=null && !password.isEmpty()){
+					find_sql.append(" AND u.password='"+password+"'");
+				}
+				//查询条件rule字段
+				String rule = one.getRule();
+				if(rule!=null && !rule.isEmpty()){
+					find_sql.append(" AND u.rule='"+rule+"'");
+				}
+				//查询条件realname字段，模糊查询
+				String realname = one.getRealname();
+				if(realname!=null && !realname.isEmpty()){
+					find_sql.append(" AND u.realname LIKE '%"+realname+"%'");
+				}
+				//查询条件sex字段
+				String sex = one.getSex();
+				if(sex!=null && !sex.isEmpty()){
+					find_sql.append(" AND u.sex='"+sex+"'");
+				}
+				//查询条件city字段
+				if(one.getCity()!=null){
+					String city = one.getCity().getCityId();
+					if(city!=null && city.length()!=0){
+						find_sql.append(" AND u.city="+city);
+					}
+				}
+				//查询条件cert_type字段
+				if(one.getCertType()!=null){
+					Integer certtype = one.getCertType().getId();
+					if(certtype!=null && certtype!=0){
+						find_sql.append(" AND u.cert_type="+certtype);
+					}
+				}
+				//查询条件cert字段
+				String cert = one.getCert();
+				if(cert!=null && !cert.isEmpty()){
+					find_sql.append(" AND u.cert LIKE '%"+cert+"%'");
+				}
+				//查询条件user_type字段
+				if(one.getUserType()!=null){
+					Integer usertype = one.getUserType().getId();
+					if(usertype!=null && usertype!=0){
+						find_sql.append(" AND u.user_type="+usertype);
+					}
+				}
+				//查询条件content字段
+				String content = one.getContent();
+				if(content!=null && !content.isEmpty()){
+					find_sql.append(" AND u.content LIKE '%"+content+"%'");
+				}
+				//查询条件status字段
+				String status = one.getStatus();
+				if(status!=null && !status.isEmpty()){
+					find_sql.append(" AND u.status='"+status+"'");
+				}
+				//查询条件login_ip字段
+				String ip = one.getLoginIp();
+				if(ip!=null && !ip.isEmpty()){
+					find_sql.append(" AND u.login_ip='"+ip+"'");
+				}
+				//查询条件image_path字段
+				String image = one.getImagePath();
+				if(image!=null && !image.isEmpty()){
+					find_sql.append(" AND u.image_path='"+image+"'");
+				}
+				PreparedStatement pstmt=null;
+				ResultSet rs=null;
+				//System.out.println(find_sql.toString());
+				try {
+					pstmt=conn.prepareStatement(find_sql.toString());
+					rs=pstmt.executeQuery();
+					if(rs.next()){
+						//根据每页条数计算列表总页数
+						rowCount=rs.getInt(1);
+					}
+				} finally {
+					DBUtil.release(pstmt,rs);
+				}
+		
+		return rowCount;
+	}
 }

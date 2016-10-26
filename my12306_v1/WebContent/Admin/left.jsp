@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -25,11 +27,11 @@ body {
   </tr>
   <tr>
     <td align="right"><img src="../img/ny_arrow1.gif" width="24" height="13"></td>
-    <td height="35"><a href="UserManageQuery.html" target="mainFrame" class="cray">用户管理</a></td>
+    <td height="35"><a href="UserManageQuery.jsp" target="mainFrame" class="cray">用户管理</a></td>
   </tr>
   <tr>
     <td align="right"><img src="../img/ny_arrow1.gif" width="24" height="13"></td>
-    <td height="35"><a href="UserInfo_Add.html" target="mainFrame" class="cray">新增用户</a></td>
+    <td height="35"><a href="UserInfo_Add.jsp" target="mainFrame" class="cray">新增用户</a></td>
   </tr>
 </table>
 </body>

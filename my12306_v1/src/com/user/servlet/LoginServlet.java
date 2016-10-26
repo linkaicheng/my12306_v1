@@ -84,7 +84,12 @@ public class LoginServlet extends HttpServlet {
 				HttpSession session = request.getSession();
 
 				session.setAttribute("user", dbUser);
-				response.sendRedirect(request.getContextPath() + "/User/Index.jsp");
+				if(dbUser.getRule().equals("1")){
+					response.sendRedirect(request.getContextPath() + "/Admin/Index.jsp");
+				}else{
+					
+					response.sendRedirect(request.getContextPath() + "/User/Index.jsp");
+				}
 			} else {
 				Cookie c = new Cookie("username", "");
 				c.setMaxAge(0);
@@ -185,8 +190,13 @@ public class LoginServlet extends HttpServlet {
 						cLogin.setPath("/");
 						response.addCookie(cLogin);
 					}
-					System.out.println("path=" + request.getContextPath());
-					response.sendRedirect(request.getContextPath() + "/User/Index.jsp");
+					if(dbUser.getRule().equals("1")){
+						//管理员主页
+						response.sendRedirect(request.getContextPath() + "/Admin/Index.jsp");
+					}else{
+						 //普通用户主页
+						response.sendRedirect(request.getContextPath() + "/User/Index.jsp");
+					}
 
 				}
 			}

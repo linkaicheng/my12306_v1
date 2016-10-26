@@ -91,4 +91,6 @@ public interface UserDao {
 	 * @throws SQLException
 	 */
 	boolean updateUser(User one) throws SQLException;
+
+	int getUserListPageCount(int pageSize, User one) throws SQLException;
 }

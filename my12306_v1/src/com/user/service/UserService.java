@@ -2,6 +2,7 @@ package com.user.service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import com.exception.ServiceException;
 import com.user.dao.UserDao;
@@ -130,5 +131,54 @@ public class UserService {
 		}
 
 		return user;
+	}
+
+	/**
+	 * 获取指定页用户信息列表，通过分页SQL语句实现
+	 * @param pageSize，每页显示信息条数
+	 * @param rowNum，需要获取的页数
+	 * @param one，需要获取的页数
+	 * @return 用户信息列表，List[User]，若无满足条件则列表为空
+	 * @throws SQLException
+	 */
+	public List<User> getUserList(int pageSize, int rowNum, User one){
+		Connection conn = null;
+		List<User> res = null;
+		try {
+			conn = DBUtil.getConnection();
+			UserDao userDao = new UserDaoImpl(conn);
+			DBUtil.beginTransaction(conn);
+			res = userDao.getUserList(pageSize,rowNum,one);
+			DBUtil.commit(conn);
+		} catch (SQLException e) {
+			DBUtil.rollback(conn);
+			throw new ServiceException("查询错误", e);
+		} finally {
+			DBUtil.release(conn);
+		}
+		
+		return res;
+	}
+
+	/**
+	 * 获取用户列表最大页数
+	 * @param pageSize，每页显示信息条数
+	 * @return 列表最大页数
+	 * @throws SQLException
+	 */
+	public int getUserListPageCount(int pageSize, User one) throws SQLException{
+		Connection conn = null;
+		int res = 0;
+		try {
+			conn = DBUtil.getConnection();
+			UserDao userDao = new UserDaoImpl(conn);
+			DBUtil.beginTransaction(conn);
+			res = userDao.getUserListPageCount(pageSize,one);
+			DBUtil.commit(conn);
+		} finally {
+			DBUtil.release(conn);
+		}
+		
+		return res;
 	}
 }
