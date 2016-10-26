@@ -40,7 +40,6 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
-
 		String action = request.getParameter("action");
 
 		if (action == null || "login".equals(action)) {
@@ -84,10 +83,10 @@ public class LoginServlet extends HttpServlet {
 				HttpSession session = request.getSession();
 
 				session.setAttribute("user", dbUser);
-				if(dbUser.getRule().equals("1")){
+				if (dbUser.getRule().equals("1")) {
 					response.sendRedirect(request.getContextPath() + "/Admin/Index.jsp");
-				}else{
-					
+				} else {
+
 					response.sendRedirect(request.getContextPath() + "/User/Index.jsp");
 				}
 			} else {
@@ -190,11 +189,11 @@ public class LoginServlet extends HttpServlet {
 						cLogin.setPath("/");
 						response.addCookie(cLogin);
 					}
-					if(dbUser.getRule().equals("1")){
-						//管理员主页
+					if (dbUser.getRule().equals("1")) {
+						// 管理员主页
 						response.sendRedirect(request.getContextPath() + "/Admin/Index.jsp");
-					}else{
-						 //普通用户主页
+					} else {
+						// 普通用户主页
 						response.sendRedirect(request.getContextPath() + "/User/Index.jsp");
 					}
 
