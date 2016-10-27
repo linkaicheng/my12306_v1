@@ -1,13 +1,10 @@
 package com.user.servlet;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +18,6 @@ import jxl.write.WritableFont;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
-import sun.awt.RepaintArea;
 
 import com.user.po.CertType;
 import com.user.po.User;
@@ -55,9 +51,9 @@ public class AdminServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		String action = request.getParameter("action");
-		if ("list".equals(action)) {
+		if ("list".equals(action)) {//查询所有用户
 			doAdminList(request, response);
-		} else if ("export".equals(action)) {
+		} else if ("export".equals(action)) {//导出到excel
 			doAdminExport(request, response);
 		}
 	}
@@ -65,10 +61,12 @@ public class AdminServlet extends HttpServlet {
 	private void doAdminExport(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		HttpSession se = request.getSession();
-
+		//获取页面查询条件的user对象
 		User user = (User) se.getAttribute("listUser");
 		UserService userService = UserService.getInstance();
+		//获取总的数据行数
 		int rowCount = userService.getUserListRowCount(user);
+		//所有符合条件的用户的list
 		List<User> list = userService.getUserList(rowCount, 1, user);
 
 		response.setHeader("Content-disposition", "attachment;filename="
@@ -137,7 +135,7 @@ public class AdminServlet extends HttpServlet {
 		if (source != null) {
 			User user = new User();
 			populateList(request, user);
-			// listUser封装了页面的查询条件
+			// 将封装了页面查询条件的user放到session中
 			se.setAttribute("listUser", user);
 			se.setAttribute("pageSize", pageSize);
 
@@ -148,6 +146,7 @@ public class AdminServlet extends HttpServlet {
 			List<User> list = userService.getUserList(
 					Integer.parseInt(pageSize), Integer.parseInt(page), user);
 			// System.out.println(list.size());
+			//获取总的页数
 			int pageCount = userService.getUserListPageCount(
 					Integer.parseInt(pageSize), user);
 			// System.out.println(pageCount);
