@@ -82,7 +82,7 @@ public class AdminServlet extends HttpServlet {
 		try {
 			WritableWorkbook workbook = Workbook.createWorkbook(os);
 			WritableSheet ws = workbook.createSheet("用户列表", 0);
-			int rowNum = -0;
+			int rowNum = 0;
 
 			WritableFont font1 = new WritableFont(WritableFont.TIMES, 16,
 					WritableFont.BOLD);
