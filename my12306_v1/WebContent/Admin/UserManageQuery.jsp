@@ -242,6 +242,7 @@
 			<tr>
 				<td height="2" background="../img/bottom_point.gif"></td>
 			</tr>
+			
 			<tr>
 				<td height="25" align="center" background="../img/bottom_ny_bg.gif"
 					class="text_cray">copyright@12306 购票网</td>
