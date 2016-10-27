@@ -91,6 +91,17 @@ public interface UserDao {
 	 * @throws SQLException
 	 */
 	boolean updateUser(User one) throws SQLException;
-
+	/**
+	 * 获取用户列表最大页数
+	 * @param pageSize，每页显示信息条数
+	 * @return 列表最大页数
+	 * @throws SQLException
+	 */
 	int getUserListPageCount(int pageSize, User one) throws SQLException;
+	/**
+	 * 获取用户列表最大行数
+	 * @return 列表最大行数
+	 * @throws SQLException
+	 */
+	int getUserListRowCount(User one) throws SQLException;
 }

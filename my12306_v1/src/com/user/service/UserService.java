@@ -181,4 +181,27 @@ public class UserService {
 		
 		return res;
 	}
+	/**
+	 * 获取用户列表最大行数
+	 * @return 列表最大行数
+	 * @throws SQLException
+	 */
+	public int getUserListRowCount(User one){
+		Connection conn = null;
+		int res = 0;
+		try {
+			conn = DBUtil.getConnection();
+			UserDao userDao = new UserDaoImpl(conn);
+			DBUtil.beginTransaction(conn);
+			res = userDao.getUserListRowCount(one);
+			DBUtil.commit(conn);
+		} catch (SQLException e) {
+			DBUtil.rollback(conn);
+			throw new ServiceException("查询错误", e);
+		} finally {
+			DBUtil.release(conn);
+		}
+		
+		return res;
+	}
 }

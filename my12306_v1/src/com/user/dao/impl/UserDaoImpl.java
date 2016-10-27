@@ -824,7 +824,7 @@ public class UserDaoImpl implements UserDao {
 		return res;
 	}
 
-	private int getUserListRowCount(User one) throws SQLException {
+	public int getUserListRowCount(User one) throws SQLException {
 		int rowCount=0;
 		//sql语句
 		StringBuffer find_sql=new StringBuffer();

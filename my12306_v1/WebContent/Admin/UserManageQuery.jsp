@@ -166,7 +166,7 @@ function selectAllNullorReserve(obj,type){
               <input name="Submit22" type="button" class="butsc" value="">
             </a></td>
             <td width="91" align="right"  class="text_cray1"><label>
-              <input name="Submit3" type="submit" class="butdc" value="">
+              <input name="Submit3" type="button" class="butdc" value="" onclick="window.location.href='<%=request.getContextPath() %>/Admin/admin?action=export'"/>
             </label></td>
           </tr>
         </table>
