@@ -138,7 +138,6 @@ public class AdminServlet extends HttpServlet {
 			// 将封装了页面查询条件的user放到session中
 			se.setAttribute("listUser", user);
 			se.setAttribute("pageSize", pageSize);
-
 		}
 		try {
 			User user = (User) se.getAttribute("listUser");
